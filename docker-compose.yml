@@ -1,0 +1,35 @@
+version: '2'
+services:
+  api:
+    build: .
+    platform: linux/amd64
+    container_name: api
+    command: bash -c "cd /src/rest && python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - "8000:8000"
+    links:
+      - mongo
+    volumes:
+      - ${ADBREW_CODEBASE_PATH}/tmp:/tmp
+      - ${ADBREW_CODEBASE_PATH}:/src
+
+  app:
+    build: .
+    platform: linux/amd64
+    container_name: app
+    command: bash -c "cd /src/app && yarn install && HOST=0.0.0.0 yarn start"
+    ports:
+      - "3000:3000"
+    volumes:
+      - ${ADBREW_CODEBASE_PATH}:/src
+
+  mongo:
+    image: mongo:6.0
+    container_name: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - ${ADBREW_CODEBASE_PATH}/db/:/data/db
+
+    

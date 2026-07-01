@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.py[cod]
+*.sqlite3
+mydatabase
+
+# Node
+node_modules/
+.eslintcache
+
+# Local data
+src/db/
+src/tmp/
+
+# OS / editor
+.DS_Store
+.cursor/
